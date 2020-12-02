@@ -1,7 +1,8 @@
 # https://adventofcode.com/2020/day/1
 
 from itertools import combinations
-
+import time
+start = time.time()
 TEST = """1721
 979
 366
@@ -36,3 +37,4 @@ def compute3(s: str) -> int:
 assert (compute3(TEST) == 241861950)
 
 print(compute3(data))
+print('Time taken {} seconds'.format(round(time.time() - start, 2)))
