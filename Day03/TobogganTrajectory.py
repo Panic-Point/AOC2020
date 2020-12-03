@@ -27,30 +27,30 @@ SLOPES = [(1, 1),
 
 def parse(s: str) -> Tuple[Set, int, int]:
     lines = s.splitlines()
-    max_x = len(lines[0])
-    max_y = len(lines)
+    width = len(lines[0])
+    height = len(lines)
     trees = set()
     x = y = 0
     for line in lines:
         for element in line:
             if element == '#':
                 trees.add((x, y))
-            x = (x + 1) % max_x
+            x = (x + 1) % width
         y += 1
 
-    return trees, max_x, max_y
+    return trees, width, height
 
 
 def count_trees(s: str, slope: Tuple) -> int:
-    puzzle_map = parse(s)
-    trees = puzzle_map[0]
-    length = puzzle_map[1]
-    distance = puzzle_map[2]
+    terrain = parse(s)
+    trees = terrain[0]
+    width = terrain[1]
+    height = terrain[2]
     x = y = count = 0
-    while y <= distance:
+    while y <= height:
         if (x, y) in trees:
             count += 1
-        x = (x + slope[0]) % length
+        x = (x + slope[0]) % width
         y += slope[1]
     return count
 
