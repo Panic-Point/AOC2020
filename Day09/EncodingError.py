@@ -31,48 +31,41 @@ with open("Day09.txt", 'r') as file:
     data = file.read()
 
 
-def parse(s: str) -> List[int]:
-    numbers = s.rstrip('\n').strip().splitlines()
-    return [int(x) for x in numbers]
+TEST_INPUT = [int(x) for x in TEST.rstrip('\n').strip().splitlines()]
+INPUT = [int(x) for x in data.rstrip('\n').strip().splitlines()]
 
 
-def find_weakness(s: str, n: int) -> int:
-    numbers = parse(s)
+def find_weakness(numbers: List[int], n: int) -> int:
     preamble = [int(x) for x in numbers[:n]]
     numbers = numbers[n:]
     for num in numbers:
-        com = combinations(preamble, 2)
-        found = []
-        for c in com:
-            if sum(c) == num:
-                found.append(num)
-        if not found:
+        sums = {sum(c) for c in combinations(preamble, 2)}
+        if num not in sums:
             return num
         preamble.pop(0)
         preamble.append(num)
     raise RuntimeError('No Invalid Value Found')
 
 
-def find_sum(s: str, n) -> int:
-    numbers = parse(s)
-    check = find_weakness(s, n)
+def find_sum(numbers: List[int], n) -> int:
+    check = find_weakness(numbers, n)
     for i in range(len(numbers)):
-        l = []
+        possibility = []
         for num in numbers[i:]:
-            l.append(num)
-            if check == sum(l):
-                return max(l) + min(l)
-            if check - sum(l) > 0:
+            possibility.append(num)
+            if check == sum(possibility):
+                return max(possibility) + min(possibility)
+            if check - sum(possibility) > 0:
                 continue
             else:
                 break
     raise RuntimeError('No Sum Found')
 
 
-assert find_weakness(TEST, 5) == 127
-print(find_weakness(data, 25))
+assert find_weakness(TEST_INPUT, 5) == 127
+print(find_weakness(INPUT, 25))
 
-assert find_sum(TEST, 5) == 62
-print(find_sum(data, 25))
+assert find_sum(TEST_INPUT, 5) == 62
+print(find_sum(INPUT, 25))
 
 print('Time taken {} seconds'.format(round(time.time() - start, 3)))
