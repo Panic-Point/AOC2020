@@ -1,6 +1,5 @@
 import time
 from typing import List
-from collections import Counter
 
 start = time.time()
 
@@ -87,10 +86,8 @@ print(max_chain(INPUT))
 """
 Realize that any time there is a jump of 3 you must pass through that number. The indicates that a logical
 way to break this down is to look at sequences between two jumps of 3
-
 Second you have to realize that there are never any 2 jumps in the actual input. Just ones and threes, which the 
 puzzle doesn't actually say that...so that is annoying.
-
 3 3 -> 1 path
 3 1 3 -> 1 path
 3 1 1 3 -> 2 paths 
@@ -114,22 +111,12 @@ puzzle doesn't actually say that...so that is annoying.
     0 3 5 7 10
     
     0 3 6 7 10
-    
+
 So count the number of one jumps between two 3 jumps and the pattern ends up being the tribonacci sequence
-https://brilliant.org/wiki/tribonacci-sequence/
+https://brilliant.org/wiki/tribonacci-sequence/. 
+
+We can find all of these sequences and multiply the number of chains together for the answer
 """
-
-
-def get_diff(adapters: List[int]) -> List[int]:
-    s = sorted(adapters)
-    pairs = list(zip(s, s[1:]))
-    out = []
-    for pair in pairs:
-        out.append(max(pair) - min(pair))
-    return out
-
-
-print(Counter(get_diff(INPUT)))
 
 
 def number_of_chains(adapters: List[int]) -> int:
@@ -164,6 +151,41 @@ def tribonacci(n: int, memo=None) -> int:
     return memo[n]
 
 
+"""Very similar to above. This works without knowing the tribonacci sequence.
+1. Create a 0 array of required lenght
+2. Fill in array as you go
+3. Paths to get to n is just the sum of the way to get to the 3 previous numbers
+4. Add base cases
+5. compute
+"""
+
+
+def number_of_chains2(adapters: List[int]) -> int:
+    s = sorted(adapters)
+
+    max_check = max(s) + 3
+    s.append(max_check)
+
+    memo = [0] * (max_check + 1)
+
+    memo[0] = 1
+
+    if 1 in adapters:
+        memo[1] = 1
+
+    if 1 in adapters and 2 in adapters:
+        memo[2] = 2
+    elif 2 in adapters:
+        memo[2] = 1
+
+    for n in range(3, max_check + 1):
+        if n not in s:
+            continue
+        memo[n] = memo[n - 1] + memo[n - 2] + memo[n - 3]
+    return memo[max_check]
+
+
 assert number_of_chains(TEST2_INPUT) == 19208
+assert number_of_chains2(TEST2_INPUT) == 19208
 print(number_of_chains(INPUT))
 print('Time taken {} seconds'.format(round(time.time() - start, 3)))
