@@ -21,7 +21,7 @@ with open("Day11.txt", 'r') as file:
 
 Grid = List[List[str]]
 TEST_GRID = [list(row) for row in TEST.split('\n')]
-GRID = [list(row) for row in data.strip().rstrip().split('\n')]
+INPUT_GRID = [list(row) for row in data.strip().rstrip().split('\n')]
 ADJACENT_SEATS = [(-1, -1), (0, -1), (1, -1), (-1, 0), (0, 1), (-1, 1), (1, 0), (1, 1)]
 
 
@@ -82,8 +82,8 @@ def change_state(grid: Grid) -> Grid:
     new_grid = deepcopy(grid)
     for i in range(len(new_grid)):
         for j in range(len(new_grid[i])):
-            #change for part1 or part 2
-            new_grid[i][j] = seat_change2(grid, i, j)
+            # change for part1 or part 2
+            new_grid[i][j] = seat_change(grid, i, j)
     return new_grid
 
 
@@ -99,7 +99,7 @@ def stabilize(grid: Grid) -> int:
         return stabilize(new_grid)
 
 
-#print(stabilize(TEST_GRID))
-print(stabilize(GRID))
+# print(stabilize(TEST_GRID))
+print(stabilize(INPUT_GRID))
 
 print('Time taken {} seconds'.format(round(time.time() - start, 3)))
