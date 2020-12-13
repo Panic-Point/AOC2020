@@ -121,6 +121,6 @@ def compute2(instructions: List[Instruction]):
 
 # print(compute2(TEST_INSTRUCTIONS))
 print(compute(deepcopy(INSTRUCTIONS)))
-print(compute2(deepcopy(INSTRUCTIONS)))
+print(round(compute2(deepcopy(INSTRUCTIONS)), 0))
 
 print('Time taken {} seconds'.format(round(time.time() - start, 3)))
