@@ -50,17 +50,6 @@ TEST2 = """28
 with open("Day10.txt", 'r') as file:
     data = file.read()
 
-# class Placeholder:
-#     def __int__(self):
-#         pass
-#
-#     @staticmethod
-#     def parse_line(line: str):
-#         pass
-#
-#
-# TEST_INSTRUCTIONS = [Placeholder.parse_line(line) for line in TEST.strip().splitlines()]
-# INSTRUCTIONS = [Placeholder.parse(line) for line in data.strip().splitlines()]
 
 TEST1_INPUT = [int(x) for x in TEST1.rstrip('\n').strip().splitlines()]
 TEST2_INPUT = [int(x) for x in TEST2.rstrip('\n').strip().splitlines()]
