@@ -38,15 +38,16 @@ class Game:
             self.spoken[n] = i
             i += 1
 
-    def play(self):
+    def play(self, stop):
         n = 0
-        while self.turn < 30000000:
+        while self.turn < stop:
             n = self.say_next(n)
+            print(self.turn, n)
             self.turn += 1
         return n
 
 
 g = Game([9, 6, 0, 10, 18, 2, 1])
-print(g.play())
+print(g.play(30_000_000))
 
 print('Time taken {} seconds'.format(round(time() - start, 3)))
